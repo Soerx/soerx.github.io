@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Бинарный поиск</title>
+  </head>
+
+  <body>
+    <span>Исходный массив:</span>
+    <span id="source-array"></span>
+    <br />
+    <input type="number" id="search-value" placeholder="Искомый элемент" />
+    <button id="search-btn">Найти</button>
+    <br />
+    <span id="result"></span>
+  </body>
+
+  <script type="module">
+    import { generateSortedRandomArray } from "../js/arrays.js";
+
+    const array = generateSortedRandomArray(10, 1, 100, "asc", true);
+    document.getElementById("source-array").innerHTML = array.join(", ");
+    document.getElementById("search-btn").addEventListener("click", search);
+    const resultElement = document.getElementById("result");
+
+    function search() {
+      const value = parseInt(document.getElementById("search-value").value);
+
+      if (isNaN(value)) {
+        resultElement.textContent = "Введите корректное число";
+        return;
+      }
+
+      let left = 0;
+      let right = array.length - 1;
+      let iterations = 0;
+      let foundIndex = -1;
+
+      while (left <= right) {
+        iterations++;
+
+        const mid = Math.floor((left + right) / 2);
+        const midValue = array[mid];
+
+        if (midValue === value) {
+          foundIndex = mid;
+          break;
+        } else if (midValue < value) {
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+
+      if (foundIndex !== -1) {
+        resultElement.textContent = `Элемент найден под индексом ${foundIndex} за ${iterations} итераций`;
+      } else {
+        resultElement.textContent = `Массив не содержит элемента! Количество итераций: ${iterations}`;
+      }
+    }
+  </script>
+</html>

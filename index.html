@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Грокаю Алгоритмы</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <h1 class="logo">Грокаю Алгоритмы</h1>
+      <nav class="nav">
+        <ul class="menu">
+          <li>
+            <button data-page="home">Главная</button>
+          </li>
+          <li>
+            <button data-page="simpleSearch">Простой поиск</button>
+          </li>
+          <li>
+            <button data-page="binarySearch">Бинарный поиск</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="subheader">
+      <h2 id="title"></h2>
+      <span id="description"></span>
+    </div>
+
+    <iframe frameborder="0" id="content" width="100%" height="100%"></iframe>
+  </body>
+
+  <script>
+    const pages = {
+      home: {
+        path: "pages/home.html",
+        title: "Главная",
+        description: "",
+      },
+      simpleSearch: {
+        path: "pages/simple-search.html",
+        title: "Простой поиск",
+        description: "Сложность o(n)",
+      },
+      binarySearch: {
+        path: "pages/binary-search.html",
+        title: "Бинарный поиск",
+        description: "Сложность o(log n)",
+      },
+    };
+
+    const iframe = document.getElementById("content");
+    const title = document.getElementById("title");
+    const description = document.getElementById("description");
+
+    function setPage(page) {
+      if (!pages[page]) {
+        console.error(`Страница "${page}" не найдена`);
+        return;
+      }
+
+      iframe.src = pages[page].path;
+      title.textContent = pages[page].title;
+      description.textContent = pages[page].description;
+    }
+
+    setPage("home");
+
+    document.querySelector(".menu").addEventListener("click", (e) => {
+      if (e.target.tagName === "BUTTON") {
+        const page = e.target.dataset.page;
+        if (page) setPage(page);
+      }
+    });
+  </script>
+</html>
